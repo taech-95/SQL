@@ -31,3 +31,4 @@ VALUES
 select upper(concat('my favorite author is ', author_lname, '!')) as yell from books order by author_lname;
 select title, author_lname from books order by author_lname, title;
 select concat(title, ' - ', released_year) as summary  from books order by released_year desc limit 3;
+select title, pages from books order by pages desc  limit 1;
