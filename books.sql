@@ -32,3 +32,30 @@ select upper(concat('my favorite author is ', author_lname, '!')) as yell from b
 select title, author_lname from books order by author_lname, title;
 select concat(title, ' - ', released_year) as summary  from books order by released_year desc limit 3;
 select title, pages from books order by pages desc  limit 1;
+select title, released_year, 
+    case
+        when released_year >=2000 then 'Modern literature'
+        else '20th centrury literature'
+    end as genre
+from books;
+
+select * from books where released_year <1980;
+select * from books where author_lname = 'Eggers' and 'Chabon';
+select * from books where author_lname in ('Eggers', 'Chabon');
+select * from books where author_lname = 'Lahiri' and released_year > 2000;
+select * from books where pages BETWEEN 100 and 200;
+select * from books where author_lname Like 'C%' or  author_lname like 'S%';
+select title, author_lname, 
+    case 
+        when title like '%stories%' then 'Short stories'
+        when title like '%Just Kids%' or title like '%A Heartbreaking Work%' then 'Memoir'
+        else 'novel'
+    end as type
+from books;
+select title, author_lname,
+    case
+        when count(*) > 1 then concat(count(*), ' books')
+        else concat(count(*), ' book')
+    end as COUNT
+from books
+group by author_lname;
