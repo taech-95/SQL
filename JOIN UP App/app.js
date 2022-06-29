@@ -7,7 +7,9 @@ let connection = mysql.createConnection({
 	host:'localhost',
 	user: 'root',
 	database: 'join_up'
-})
+});
+
+
 	
 connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
    if (error) throw error;
