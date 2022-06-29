@@ -2,6 +2,8 @@ let express = require('express');
 let app = express();
 const { faker } = require('@faker-js/faker');
 const mysql  = require('mysql')
+let bodyParser = require('body-parser');
+
 let connection = mysql.createConnection({
 	host:'localhost',
 	user: 'root',
@@ -9,6 +11,9 @@ let connection = mysql.createConnection({
 });
 
 app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(express.static(__dirname+"/public"));
+
 app.get("/", (req,res)=>{
 	let query = "SELECT COUNT(*) AS count FROM users";
 	connection.query(query, (err,results) =>{
@@ -20,8 +25,22 @@ app.get("/", (req,res)=>{
 	 });
 	// console.log("hello from web page");
 	
-	
 });
+
+app.post("/register", (req, res)=>{
+	let person = {
+		email: req.body.email
+	};
+	
+	connection.query("INSERT INTO users SET ?", person, function(err,result){
+		if(err) throw err;
+		console.log(result);
+		// res.send("Thanks for join us!");
+		res.redirect('/');
+	});
+	console.log("Post request" + person);
+});
+
 
 app.get("/joke", async(req,res)=>{
 	let joke = "ahah"
